@@ -25,21 +25,21 @@ model User {
   refs            Int        @default(0)   // Number of referrals
   chancesLeft     Int        @default(3)   // Chances left to play (default 3)
   xoWins          Int        @default(0)   // Number of X/O game wins
+  referralCode    String?  @unique // Unique referral code
 
-  referralsByMe   Referral[] @relation("ReferredBy")  // Users referred by this user
-  referralsToMe   Referral[] @relation("ReferredUser") // Referrals where this user is referred
+  referrals       Referral[] @relation("UserReferrals")
 }
 
 
 model Referral {
-  id               String    @id @default(cuid())
-  referredById     String    // ID of the user who referred this user
-  referredBy       User      @relation("ReferredBy", fields: [referredById], references: [id]) // Relation to the referrer
-  referredUserId   String    // ID of the referred user
-  referredUser     User      @relation("ReferredUser", fields: [referredUserId], references: [id]) // Relation to the referred user
-  referredUserName String    // Username of the referred user
-  referredUserImage String?  // Image of the referred user
-  referredUserRefs Int       @default(0) // Referrals of the referred user
+  id               String   @id @default(cuid())
+  referredById     String   // Referrer ID
+  referredUserId   String   // Referred User ID
+  referredUserName String   // Username of referred user
+  referredUserImage String? // Optional image
+  createdAt        DateTime @default(now())
+
+  referredBy       User     @relation("UserReferrals", fields: [referredById], references: [id])
 }
 
 

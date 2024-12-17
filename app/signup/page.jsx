@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, FormEvent } from "react"
+import { useState, FormEvent, useEffect } from "react"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 
@@ -11,6 +11,15 @@ export default function SignUp() {
   const [password, setPassword] = useState("")
   const [username, setUsername] = useState("")
   const [error, setError] = useState("")
+  const [ref, setRef] = useState("")
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const refCode = urlParams.get("ref")
+    if (refCode) {
+      setRef(refCode)
+    }
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -19,7 +28,7 @@ export default function SignUp() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email, password, username }),
+      body: JSON.stringify({ name, email, password, username, ref }),
     })
 
     if (response.ok) {
