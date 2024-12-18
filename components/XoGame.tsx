@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
 
-export default function XoGame() {
+export default function xoGame() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [isUserTurn, setIsUserTurn] = useState(Math.random() < 0.5);
   const [userSymbol, setUserSymbol] = useState(Math.random() < 0.5 ? "X" : "O");
