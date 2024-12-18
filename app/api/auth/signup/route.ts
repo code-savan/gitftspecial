@@ -244,10 +244,10 @@
 
 
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import prisma from "../../../../lib/prisma";
 
-const prisma = new PrismaClient();
+
 
 // Function to generate a random 8-character referral code
 function generateReferralCode(length = 8) {

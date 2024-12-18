@@ -1,34 +1,54 @@
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "../api/auth/[...nextauth]/route"
-import { redirect } from "next/navigation"
-import Link from "next/link"
-import XoGame from "../../components/XoGame"
+'use client'
 
-export default async function Dashboard() {
-  const session = await getServerSession(authOptions)
+import { useEffect } from 'react'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import XoGame from '../../components/xoGame'
+import { useUser } from '../providers/UserProvider'
 
-  if (!session) {
-    redirect("/signin")
+export default function Dashboard() {
+  const router = useRouter()
+  const { data: session, status } = useSession()
+  const { userData, refreshUserData } = useUser()
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/signin')
+    }
+  }, [status, router])
+
+  useEffect(() => {
+    if (session?.user) {
+      refreshUserData()
+    }
+  }, [session, refreshUserData])
+
+  if (status === 'loading' || !userData) {
+    return <div>Loading...</div>
   }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
-      <div className="w-full max-w-2xl bg-white rounded-lg shadow-md p-8">
+      <div className="w-full max-w-4xl bg-white rounded-lg shadow-md p-8">
         <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
-        <p className="text-xl mb-4 capitalize">Welcome, {session.user?.name}!</p>
-        <p className="mb-4">This is your protected dashboard. Only authenticated users can access this page.</p>
-        <h1>Welcome, {session.user?.name}</h1>
-      <p>Battery Level: {session.user?.batteryLevel}</p>
-      <p>Points: {session.user?.points}</p>
-      <p>Wallet Balance: {session.user?.wallet}</p>
-      <p>Chances Left: {session.user?.chancesLeft}</p>
-      <p>Refs: {session.user?.refs}</p>
-      <p>X/O Wins: {session.user?.xoWins}</p>
-      {/* xo game div  */}
-      <div className="">
-      <XoGame />
-      </div>
-        <div className="flex justify-between">
+        <p className="text-xl mb-4 capitalize">Welcome, {session?.user?.name}!</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">Your Stats</h2>
+            <p>Battery Level: {userData.batteryLevel}%</p>
+            <p>Points: {userData.points}</p>
+            <p>Wallet Balance: ${userData.wallet.toFixed(2)}</p>
+            <p>Chances Left: {userData.chancesLeft}</p>
+            <p>Refs: {userData.refs}</p>
+            <p>X/O Wins: {userData.xoWins}</p>
+          </div>
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">Play Tic-Tac-Toe</h2>
+            <XoGame />
+          </div>
+        </div>
+        <div className="flex justify-between mt-8">
           <Link href="/" className="text-blue-500 hover:underline">Go to Home</Link>
           <Link href="/api/auth/signout" className="text-red-500 hover:underline">Sign out</Link>
         </div>
@@ -36,3 +56,4 @@ export default async function Dashboard() {
     </div>
   )
 }
+

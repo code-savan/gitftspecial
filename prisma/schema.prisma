@@ -21,11 +21,11 @@ model User {
   batteryLevel    Int        @default(100) // Battery level (default 100)
   points          Int        @default(0)   // Activity points for rewards and tasks
   wallet          Float      @default(0.0) // Withdrawable amount
-  referrerId      String?                // ID of the user's referrer
+  referrerId      String?                  // ID of the user's referrer
   refs            Int        @default(0)   // Number of referrals
   chancesLeft     Int        @default(3)   // Chances left to play (default 3)
   xoWins          Int        @default(0)   // Number of X/O game wins
-  referralCode    String?  @unique // Unique referral code
+  referralCode    String?    @unique // Unique referral code
 
   referrals       Referral[] @relation("UserReferrals")
 }

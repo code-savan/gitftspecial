@@ -1,40 +1,122 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+
 
 export default function XoGame() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [isUserTurn, setIsUserTurn] = useState(Math.random() < 0.5);
   const [userSymbol, setUserSymbol] = useState(Math.random() < 0.5 ? "X" : "O");
   const [gameStatus, setGameStatus] = useState("playing");
+  const [gameCount, setGameCount] = useState(0);
+  const [winningLine, setWinningLine] = useState<number[] | null>(null);
+
+  const { data: session } = useSession();
+const [userStats, setUserStats] = useState({ chancesLeft: 0, xoWins: 0, points: 0 });
+
+
+useEffect(() => {
+    const fetchUserStats = async () => {
+      try {
+        const res = await fetch("/api/getuser", { method: "GET" });
+        if (!res.ok) {
+          throw new Error("Failed to fetch user stats");
+        }
+        const data = await res.json();
+        setUserStats(data);
+        console.log("Fetched data:", data);
+      } catch (error) {
+        console.error("Error fetching user stats:", error);
+      }
+    };
+
+    if (session?.user) fetchUserStats();
+  }, [session]);
+
 
   useEffect(() => {
-    if (!isUserTurn && gameStatus === "playing") {
+    if (!isUserTurn && gameStatus === "playing" && gameCount < 3) {
       const timer = setTimeout(() => {
         makeAIMove();
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [isUserTurn, gameStatus]);
+  }, [isUserTurn, gameStatus, gameCount]);
+
 
   useEffect(() => {
-    const winner = calculateWinner(board);
-    if (winner) {
-      setGameStatus(winner === userSymbol ? "won" : "lost");
-      resetAfterDelay();
+    const result = calculateWinner(board);
+    if (result) {
+      const [winner] = result;
+      if (winner === userSymbol) {
+        setGameStatus("won");
+        updateGameStats("win");
+      } else {
+        setGameStatus("lost");
+        updateGameStats("lose");
+      }
     } else if (board.every((square) => square !== null)) {
       setGameStatus("draw");
-      resetAfterDelay();
+      updateGameStats("draw");
     }
-  }, [board, userSymbol]);
+  }, [board]);
 
-  function handleClick(index: number) {
+  const updateGameStats = async (result: string) => {
+    await fetch("/api/useractions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ result })
+    });
+
+    // Refresh stats
+    const res = await fetch("/api/getuser");
+    const data = await res.json();
+    setUserStats(data);
+
+    resetAfterDelay();
+  };
+
+
+//   useEffect(() => {
+//     const result = calculateWinner(board);
+//     if (result) {
+//       const [winner, line] = result;
+//       setWinningLine(line);
+//       if (winner === userSymbol) {
+//         setGameStatus("won");
+//         setGameCount(prevCount => prevCount + 1);
+//       } else {
+//         setGameStatus("lost");
+//         setGameCount(prevCount => prevCount + 1);
+//       }
+//       resetAfterDelay();
+//     } else if (board.every((square) => square !== null)) {
+//       setGameStatus("draw");
+//       resetAfterDelay();
+//     }
+//   }, [board, userSymbol]);
+
+//   function handleClick(index: number) {
+//     if (board[index] || !isUserTurn || gameStatus !== "playing" || gameCount >= 3) return;
+//     const newBoard = [...board];
+//     newBoard[index] = userSymbol;
+//     setBoard(newBoard);
+//     setIsUserTurn(false);
+//   }
+
+function handleClick(index: number) {
+    if (!userStats.chancesLeft) {
+      alert("No chances left to play!");
+      return;
+    }
     if (board[index] || !isUserTurn || gameStatus !== "playing") return;
     const newBoard = [...board];
     newBoard[index] = userSymbol;
     setBoard(newBoard);
     setIsUserTurn(false);
   }
+
 
   function makeAIMove() {
     const availableSquares = board
@@ -56,8 +138,8 @@ export default function XoGame() {
       }
     }
 
-    // Introduce a 45% chance of making a suboptimal move
-    if (Math.random() < 0.45) {
+    // Introduce a 50% chance of making a suboptimal move
+    if (Math.random() < 0.5) {
       bestMove = availableSquares[Math.floor(Math.random() * availableSquares.length)];
     }
 
@@ -68,9 +150,11 @@ export default function XoGame() {
   }
 
   function minimax(board: (string | null)[], depth: number, isMaximizing: boolean): number {
-    const winner = calculateWinner(board);
-    if (winner === (userSymbol === "X" ? "O" : "X")) return 10 - depth;
-    if (winner === userSymbol) return depth - 10;
+    const result = calculateWinner(board);
+    if (result) {
+      const [winner] = result;
+      return winner === (userSymbol === "X" ? "O" : "X") ? 10 - depth : depth - 10;
+    }
     if (board.every((square) => square !== null)) return 0;
 
     if (isMaximizing) {
@@ -100,14 +184,17 @@ export default function XoGame() {
 
   function resetAfterDelay() {
     setTimeout(() => {
-      setBoard(Array(9).fill(null));
-      setIsUserTurn(Math.random() < 0.5);
-      setUserSymbol(Math.random() < 0.5 ? "X" : "O");
-      setGameStatus("playing");
+      if (gameCount < 3) {
+        setBoard(Array(9).fill(null));
+        setIsUserTurn(Math.random() < 0.5);
+        setUserSymbol(Math.random() < 0.5 ? "X" : "O");
+        setGameStatus("playing");
+        setWinningLine(null);
+      }
     }, 2000);
   }
 
-  function calculateWinner(board: (string | null)[]) {
+  function calculateWinner(board: (string | null)[]): [string, number[]] | null {
     const lines = [
       [0, 1, 2],
       [3, 4, 5],
@@ -121,7 +208,7 @@ export default function XoGame() {
     for (let line of lines) {
       const [a, b, c] = line;
       if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-        return board[a];
+        return [board[a], line];
       }
     }
     return null;
@@ -135,15 +222,20 @@ export default function XoGame() {
           <button
             key={index}
             onClick={() => handleClick(index)}
-            className="w-16 h-16 flex items-center justify-center border-2 border-gray-300 text-2xl font-bold hover:bg-gray-100"
-            disabled={!isUserTurn || gameStatus !== "playing"}
+            className={`w-16 h-16 flex items-center justify-center text-2xl font-bold hover:bg-gray-100
+              ${value === userSymbol ? 'text-blue-500' : 'text-red-500'}
+              ${winningLine?.includes(index)
+                ? 'border-4 border-yellow-400'
+                : 'border-2 border-gray-300'
+              }`}
+            disabled={!isUserTurn || gameStatus !== "playing" || gameCount >= 3}
           >
             {value}
           </button>
         ))}
       </div>
       <div className="mt-4 text-center">
-        {gameStatus === "playing" && (
+        {gameStatus === "playing" && gameCount < 3 && (
           <p className="text-gray-700">
             {isUserTurn ? "Your turn" : "AI is thinking..."}
           </p>
@@ -157,8 +249,17 @@ export default function XoGame() {
         {gameStatus === "draw" && (
           <p className="text-blue-500 font-semibold">It's a draw! 🤝</p>
         )}
+        {gameCount >= 3 && (
+          <p className="text-purple-500 font-semibold mt-2">Game over! You've played 3 times.</p>
+        )}
+        <p className="text-gray-600 mt-2">Games played: {gameCount}/10</p>
+        <div className="mt-4">
+  <p>Chances Left: {userStats.chancesLeft}</p>
+  <p>Points: {userStats.points}</p>
+  <p>Wins: {userStats.xoWins}</p>
+</div>
+
       </div>
     </div>
   );
 }
-

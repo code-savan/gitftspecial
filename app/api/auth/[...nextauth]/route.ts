@@ -1,7 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../../../lib/prisma";
 import bcrypt from "bcryptjs";
 import NextAuth from "next-auth/next";
 
@@ -34,7 +34,6 @@ interface CustomUser extends NextAuthUser {
     xoWins?: number;
 }
 
-const prisma = new PrismaClient();
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),

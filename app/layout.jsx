@@ -1,5 +1,5 @@
 import { Inter } from 'next/font/google'
-import { AuthProvider } from './providers'
+import { AuthProvider } from './providers/AuthProvider'
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "./api/auth/[...nextauth]/route"
 import Link from 'next/link'
