@@ -202,7 +202,7 @@ export async function POST(req: Request) {
           referredById: referrer.id,       // Referrer's ID
           referredUserId: user.id,        // New user's ID
           referredUserName: user.username, // New user's username
-          referredUserImage: user.image,   // Optional: New user's image
+          referredUserImage: user.image ?? "https://i.postimg.cc/L6D3rZx4/logo.webp",   // Optional: New user's image
         },
       });
     }
