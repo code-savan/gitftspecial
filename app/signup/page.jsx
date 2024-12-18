@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, FormEvent, useEffect } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 

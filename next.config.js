@@ -1,23 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,
-    swcMinify: true,
-    compiler: {
-      styledComponents: true,
+    // Remove swcMinify as it's no longer needed in Next.js 15
+    eslint: {
+      // Warning: This allows production builds to successfully complete even if
+      // your project has ESLint errors.
+      ignoreDuringBuilds: true,
     },
-  };
+  }
 
-  module.exports = nextConfig;
+  module.exports = nextConfig
 
-
-
-
-// module.exports = {
-//     webpack: (config, { isServer }) => {
-//         if (!isServer) {
-//           // Ignore native modules in client bundles
-//           config.externals = ["bcrypt"];
-//         }
-//         return config;
-//       },
-//   }

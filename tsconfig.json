@@ -17,11 +17,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "types": ["node"],
     "plugins": [
       {
         "name": "next"
       }
     ],
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./*"]
     }
@@ -29,6 +31,8 @@
   "include": [
   "next-env.d.ts",
   ".next/types/**/*.ts",
+  "next-env.d.js",
+  ".next/types/**/*.js",
   "**/*.ts",
   "**/*.tsx",
   "**/*.js",
