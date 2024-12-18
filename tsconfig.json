@@ -83,7 +83,7 @@
 {
     "compilerOptions": {
       "target": "ES2017",
-      "strict": false,
+      "strict": true,
       "skipLibCheck": true,
       "noEmit": true,
       "jsx": "preserve",
