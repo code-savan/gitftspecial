@@ -48,14 +48,21 @@ useEffect(() => {
   useEffect(() => {
     const result = calculateWinner(board);
     if (result) {
-      const [winner] = result;
-      if (winner === userSymbol) {
-        setGameStatus("won");
-        updateGameStats("win");
-      } else {
-        setGameStatus("lost");
-        updateGameStats("lose");
-      }
+    //   const [winner] = result;
+    //   if (winner === userSymbol) {
+    //     setGameStatus("won");
+    //     updateGameStats("win");
+    //   } else {
+    //     setGameStatus("lost");
+    //     updateGameStats("lose");
+    const [winner, line] = result;
+    if (winner && winner === userSymbol) { // Ensure winner is not null
+      setGameStatus("won");
+      updateGameStats("win");
+    } else if (winner) {
+      setGameStatus("lost");
+      updateGameStats("lose");
+    }
     } else if (board.every((square) => square !== null)) {
       setGameStatus("draw");
       updateGameStats("draw");
@@ -208,7 +215,7 @@ function handleClick(index: number) {
     for (let line of lines) {
       const [a, b, c] = line;
       if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-        return [board[a], line];
+        return [board[a]!, line];
       }
     }
     return null;
