@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-
+import { motion } from 'framer-motion'
 
 export default function xoGame() {
   const [board, setBoard] = useState(Array(9).fill(null));
@@ -221,52 +221,120 @@ function handleClick(index: number) {
     return null;
   }
 
-  return (
-    <div className="flex flex-col items-center">
-      <h2 className="text-2xl font-bold mb-4">Tic-Tac-Toe</h2>
-      <div className="grid grid-cols-3 gap-2">
+//   return (
+//     <div className="flex flex-col items-center">
+//       <h2 className="text-2xl font-bold mb-4">Tic-Tac-Toe</h2>
+//       <div className="grid grid-cols-3 gap-2">
+//         {board.map((value, index) => (
+//           <button
+//             key={index}
+//             onClick={() => handleClick(index)}
+//             className={`w-16 h-16 flex items-center justify-center text-2xl font-bold hover:bg-gray-100
+//               ${value === userSymbol ? 'text-blue-500' : 'text-red-500'}
+//               ${winningLine?.includes(index)
+//                 ? 'border-4 border-yellow-400'
+//                 : 'border-2 border-gray-300'
+//               }`}
+//             disabled={!isUserTurn || gameStatus !== "playing" || gameCount >= 3}
+//           >
+//             {value}
+//           </button>
+//         ))}
+//       </div>
+//       <div className="mt-4 text-center">
+//         {gameStatus === "playing" && gameCount < 3 && (
+//           <p className="text-gray-700">
+//             {isUserTurn ? "Your turn" : "AI is thinking..."}
+//           </p>
+//         )}
+//         {gameStatus === "won" && (
+//           <p className="text-green-500 font-semibold">You have won! 🎉</p>
+//         )}
+//         {gameStatus === "lost" && (
+//           <p className="text-red-500 font-semibold">You have lost! 😢</p>
+//         )}
+//         {gameStatus === "draw" && (
+//           <p className="text-blue-500 font-semibold">It's a draw! 🤝</p>
+//         )}
+//         {gameCount >= 3 && (
+//           <p className="text-purple-500 font-semibold mt-2">Game over! You've played 3 times.</p>
+//         )}
+//         <p className="text-gray-600 mt-2">Games played: {gameCount}/10</p>
+//         <div className="mt-4">
+//   <p>Chances Left: {userStats.chancesLeft}</p>
+//   <p>Points: {userStats.points}</p>
+//   <p>Wins: {userStats.xoWins}</p>
+// </div>
+
+//       </div>
+//     </div>
+//   );
+return (
+    <div className="flex flex-col items-center p-0">
+      <div className="grid grid-cols-3 gap-2 mb-4 h-fit w-fit bg-[#050d25e2] p-4 rounded-[15px]">
         {board.map((value, index) => (
-          <button
-            key={index}
-            onClick={() => handleClick(index)}
-            className={`w-16 h-16 flex items-center justify-center text-2xl font-bold hover:bg-gray-100
-              ${value === userSymbol ? 'text-blue-500' : 'text-red-500'}
-              ${winningLine?.includes(index)
-                ? 'border-4 border-yellow-400'
-                : 'border-2 border-gray-300'
-              }`}
-            disabled={!isUserTurn || gameStatus !== "playing" || gameCount >= 3}
-          >
-            {value}
-          </button>
+         <motion.button
+          key={index}
+          onClick={() => handleClick(index)}
+          className={`w-20 h-20 border border-slate-800 flex items-center justify-center text-2xl font-bold rounded-lg
+            ${value === userSymbol ? 'bg-[#3956c8] text-white' : value ? 'bg-red-500 text-white' : 'bg-transparent'}
+            ${winningLine?.includes(index) ? 'ring-4 ring-green-400' : ''}
+            ${!value ? 'hover:bg-[#3956c8]/50' : ''}`}
+          disabled={!isUserTurn || gameStatus !== "playing" || gameCount >= 3}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {value}
+        </motion.button>
         ))}
       </div>
-      <div className="mt-4 text-center">
+      <div className="text-center">
         {gameStatus === "playing" && gameCount < 3 && (
-          <p className="text-gray-700">
+          <p className="text-lg font-semibold mb-2">
             {isUserTurn ? "Your turn" : "AI is thinking..."}
           </p>
         )}
         {gameStatus === "won" && (
-          <p className="text-green-500 font-semibold">You have won! 🎉</p>
+          <motion.p
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            className="text-2xl font-bold text-green-500 mb-2"
+          >
+            You have won! 🎉
+            <br/> +100 Points
+          </motion.p>
         )}
         {gameStatus === "lost" && (
-          <p className="text-red-500 font-semibold">You have lost! 😢</p>
+          <motion.p
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            className="text-2xl font-bold text-red-500 mb-2"
+          >
+            You have lost!🤣
+          </motion.p>
         )}
         {gameStatus === "draw" && (
-          <p className="text-blue-500 font-semibold">It's a draw! 🤝</p>
+          <motion.p
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            className="text-2xl font-bold text-blue-500 mb-2"
+          >
+            It's a draw (You're Lucky)! 😉
+          </motion.p>
         )}
         {gameCount >= 3 && (
-          <p className="text-purple-500 font-semibold mt-2">Game over! You've played 3 times.</p>
+          <p className="text-lg font-semibold text-purple-500 mb-2">Game over! You've played 10 times.</p>
         )}
-        <p className="text-gray-600 mt-2">Games played: {gameCount}/10</p>
-        <div className="mt-4">
-  <p>Chances Left: {userStats.chancesLeft}</p>
-  <p>Points: {userStats.points}</p>
-  <p>Wins: {userStats.xoWins}</p>
-</div>
+        <p className="text-gray-600 mb-4">Games played: {gameCount}/10</p>
+        <div className="space-y-2">
+          {/* <p>You have {userStats.chancesLeft} chances left</p>
+          <p>Points: {userStats.points}</p>
+          <p>Wins: {userStats.xoWins}</p>
+          <p> */}
 
+          {/* </p> */}
+        </div>
       </div>
     </div>
-  );
+  )
 }

@@ -8,8 +8,11 @@ import "./globals.css";
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'NextAuth Prisma App',
-  description: 'A Next.js app with NextAuth and Prisma',
+  title: 'XOPlayers',
+  description: 'Play games, earn rewards effortlessly',
+  icons: {
+    icon: "/fav.png"
+  }
 }
 
 export default async function RootLayout({
@@ -21,9 +24,9 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider>
-          <header className="bg-gray-800 text-white p-4">
+          {/* <header className="bg-gray-800 text-white p-4">
             <nav className="flex justify-between items-center">
-              <Link href="/" className="text-xl font-bold">NextAuth Prisma App</Link>
+              <Link href="/" className="text-xl font-bold">CashXO</Link>
               {session ? (
                 <div className="flex items-center gap-4">
                   <span>Hello, {session.user?.name}</span>
@@ -38,8 +41,8 @@ export default async function RootLayout({
                 </div>
               )}
             </nav>
-          </header>
-          <main className="container mx-auto mt-8">
+          </header> */}
+          <main className="">
             {children}
           </main>
         </AuthProvider>

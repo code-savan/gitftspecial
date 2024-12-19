@@ -182,6 +182,7 @@ export async function POST(req: Request) {
         name,
         email,
         username,
+        image: "https://i.postimg.cc/L8GZLZts/A-futuristic-cinematic-3-D-rendering-featuring-a-sleek-and-advanced-cyber-robotic-child-helmet-Prem.png",
         password: hashedPassword,
         referralCode, // Assign the generated referral code
         referrerId: referrer ? referrer.id : null, // Link the referrer if provided
@@ -193,7 +194,7 @@ export async function POST(req: Request) {
       // Increment the referrer's referral count
       await prisma.user.update({
         where: { id: referrer.id },
-        data: { refs: { increment: 1 } },
+        data: { refs: { increment: 1 },  chancesLeft: { increment: 5 }, batteryLevel: 100,},
       });
 
       // Add an entry to the Referral table
@@ -202,7 +203,7 @@ export async function POST(req: Request) {
           referredById: referrer.id,       // Referrer's ID
           referredUserId: user.id,        // New user's ID
           referredUserName: user.username ?? "Anonymous", // New user's username
-          referredUserImage: user.image ?? "https://i.postimg.cc/L6D3rZx4/logo.webp",   // Optional: New user's image
+          referredUserImage: user.image ?? "https://i.postimg.cc/L8GZLZts/A-futuristic-cinematic-3-D-rendering-featuring-a-sleek-and-advanced-cyber-robotic-child-helmet-Prem.png",   // Optional: New user's image
         },
       });
     }
