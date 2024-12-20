@@ -16,7 +16,7 @@ export default function Sidebar() {
     <motion.aside
       initial={{ x: -250 }}
       animate={{ x: 0 }}
-      className="w-64 bg-white/10 backdrop-blur-lg p-6 md:flex flex-col justify-between hidden "
+      className="w-64 bg-white/10 backdrop-blur-lg p-6 md:flex flex-col justify-between hidden"
     >
       <nav>
         <ul className="space-y-4">

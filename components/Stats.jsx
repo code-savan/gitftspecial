@@ -15,7 +15,7 @@ const Stats = () => {
             <Image src="/chances.png" width={100} height={100} alt='profile' className='rounded-full size-[20px] mb-1 mx-auto' />
 
                 <span className='font-semibold text-[14px]'>
-           ${userData.chancesLeft}
+           {userData.chancesLeft}
                 </span>
             </div>
             <p className='text-[9px] text-gray-300'>Chances Left</p>
@@ -28,7 +28,7 @@ const Stats = () => {
             <Image src="/points.png" width={100} height={100} alt='profile' className='rounded-full size-[20px] mb-1 mx-auto' />
 
                 <span className='font-semibold text-[14px]'>
-           ${userData.points}
+           {userData.points}
                 </span>
             </div>
             <p className='text-[9px] text-gray-300'>Points</p>
@@ -41,7 +41,7 @@ const Stats = () => {
             <Image src="/wins.png" width={100} height={100} alt='profile' className='rounded-full size-[20px] mb-1 mx-auto' />
 
                 <span className='font-semibold text-[14px]'>
-           ${userData.xoWins}
+           {userData.xoWins}
                 </span>
             </div>
             <p className='text-[9px] text-gray-300'>XO Wins</p>
@@ -54,7 +54,7 @@ const Stats = () => {
             <Image src="/refs.png" width={100} height={100} alt='profile' className='rounded-full size-[20px] mb-1 mx-auto' />
 
                 <span className='font-semibold text-[14px]'>
-           ${userData.refs}
+           {userData.refs}
                 </span>
             </div>
             <p className='text-[9px] text-gray-300'>Refs</p>
@@ -67,7 +67,7 @@ const Stats = () => {
             <Image src="/battery.png" width={100} height={100} alt='profile' className='rounded-full size-[20px] mb-1 mx-auto' />
 
                 <span className='font-semibold text-[14px]'>
-           ${userData.batteryLevel}
+           {userData.batteryLevel}%
                 </span>
             </div>
             <p className='text-[9px] text-gray-300'>Battery</p>

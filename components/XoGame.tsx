@@ -3,11 +3,13 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { motion } from 'framer-motion'
+import xImage from "/x.png";
+import oImage from "/o.png";
 
 export default function xoGame() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [isUserTurn, setIsUserTurn] = useState(Math.random() < 0.5);
-  const [userSymbol, setUserSymbol] = useState(Math.random() < 0.5 ? "X" : "O");
+  const [userSymbol, setUserSymbol] = useState(Math.random() < 0.5 ? `X` : "O");
   const [gameStatus, setGameStatus] = useState("playing");
   const [gameCount, setGameCount] = useState(0);
   const [winningLine, setWinningLine] = useState<number[] | null>(null);
@@ -276,7 +278,7 @@ return (
          <motion.button
           key={index}
           onClick={() => handleClick(index)}
-          className={`w-20 h-20 border border-slate-800 flex items-center justify-center text-2xl font-bold rounded-lg
+          className={`size-20 border border-slate-800 flex items-center justify-center text-2xl font-bold rounded-lg
             ${value === userSymbol ? 'bg-[#3956c8] text-white' : value ? 'bg-red-500 text-white' : 'bg-transparent'}
             ${winningLine?.includes(index) ? 'ring-4 ring-green-400' : ''}
             ${!value ? 'hover:bg-[#3956c8]/50' : ''}`}
@@ -284,7 +286,12 @@ return (
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          {value}
+            {value === "X" && (
+              <img src="/x.png" alt="X" className="size-10 object-contain" />
+            )}
+            {value === "O" && (
+              <img src="/o.png" alt="O" className="size-10 object-contain" />
+            )}
         </motion.button>
         ))}
       </div>
@@ -298,7 +305,7 @@ return (
           <motion.p
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            className="text-2xl font-bold text-green-500 mb-2"
+            className="text-[18px] font-bold text-green-500 mb-2"
           >
             You have won! 🎉
             <br/> +100 Points
@@ -308,21 +315,21 @@ return (
           <motion.p
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            className="text-2xl font-bold text-red-500 mb-2"
+            className="text-[18px] font-bold text-red-500 mb-2"
           >
-            You have lost!🤣
+            You have lost! 🤣
           </motion.p>
         )}
         {gameStatus === "draw" && (
           <motion.p
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            className="text-2xl font-bold text-blue-500 mb-2"
+            className="text-[18px] font-bold text-blue-500 mb-2"
           >
             It's a draw (You're Lucky)! 😉
           </motion.p>
         )}
-        {gameCount >= 3 && (
+        {gameCount === 10 && (
           <p className="text-lg font-semibold text-purple-500 mb-2">Game over! You've played 10 times.</p>
         )}
         <p className="text-gray-600 mb-4">Games played: {gameCount}/10</p>

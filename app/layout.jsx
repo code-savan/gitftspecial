@@ -42,7 +42,7 @@ export default async function RootLayout({
               )}
             </nav>
           </header> */}
-          <main className="">
+          <main className="text-white">
             {children}
           </main>
         </AuthProvider>

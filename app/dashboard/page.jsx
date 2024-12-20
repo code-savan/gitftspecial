@@ -141,20 +141,6 @@ export default function Dashboard() {
                 <XoGame />
               </CardContent>
             </Card>
-            {/* <Card className="bg-white/10 backdrop-blur-lg text-white">
-              <CardHeader>
-                <CardTitle>Your Stats</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p>Battery Level: {userData.batteryLevel}%</p>
-                <p>Points: {userData.points}</p>
-                <p>Wallet Balance: ${userData.wallet.toFixed(2)}</p>
-                <p>Chances Left: {userData.chancesLeft}</p>
-                <p>Refs: {userData.refs}</p>
-                <p>X/O Wins: {userData.xoWins}</p>
-              </CardContent>
-            </Card> */}
-
           </div>
         </motion.div>
       </main>
