@@ -4,7 +4,7 @@ import Link from "next/link";
 import Modal from "../components/Modal";
 import { useState, useEffect } from "react";
 import styled from 'styled-components';
-import { X, CircleDot, DollarSign, Users, Award, Zap, Gift, ChevronRight, Trophy, Target, Coins, UserPlus, Gamepad2 } from 'lucide-react';
+import { X, CircleDot, DollarSign, Users, Award, Zap, Gift, ChevronRight, Trophy, Target, Coins, UserPlus, Gamepad2, Menu } from 'lucide-react';
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Image from "next/image";
@@ -17,6 +17,17 @@ import { useUser } from '../app/providers/UserProvider'
 
 export default function HomeClient({ session }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
+      const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+
+  const navItems = [
+    { href: '#how-it-works', label: 'How It Works' },
+    { href: '#features', label: 'Features' },
+    { href: '#club', label: 'XO Club' },
+    { href: '#faq', label: 'FAQ' },
+  ]
+
 
       const router = useRouter()
     //   const { data: session, status } = session
@@ -54,37 +65,63 @@ export default function HomeClient({ session }) {
   }, []);
 
 
-  return (
-      <>
-       <div className="min-h-screen bg-[#020617]">
+    return (
+        <>
+      if (!session) {
+               <>
+             <div className="min-h-screen bg-[#020617]">
 
       {/* Hero Section */}
       <section className="pt-32 pb-20 bg-gradient-to-b from-[#020617] to-[#0f172a] h-screen">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#020617]/80 backdrop-blur-lg">
-        <div className="max-w-[1200px] mx-auto px-4 flex items-center justify-between py-5">
-          <div className="flex items-center gap-2 text-[#ff4800] font-bold text-xl">
-            XO Players
-          </div>
-          <nav className="hidden md:flex items-center gap-8">
-            <a href="#how-it-works" className="text-sm font-medium text-[#ffffff] hover:text-[#ff4800] transition-colors">
-              How It Works
+     <header className="fixed top-0 left-0 right-0 z-50 bg-[#020617]/10 backdrop-blur-lg">
+      <div className="max-w-[1200px] mx-auto px-4 flex items-center justify-between py-5">
+        <div className="flex items-center gap-2 text-[#ff4800] font-bold text-xl">
+          <Image src={"/logo.png"} alt="logo" width={400} height={200} className="w-[200px]" />
+        </div>
+        <nav className="hidden md:flex items-center gap-8">
+          {navItems.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="text-sm font-medium text-[#ffffff] hover:text-[#ff4800] transition-colors"
+            >
+              {item.label}
             </a>
-            <a href="#features" className="text-sm font-medium text-[#ffffff] hover:text-[#ff4800] transition-colors">
-              Features
-            </a>
-            <a href="#club" className="text-sm font-medium text-[#ffffff] hover:text-[#ff4800] transition-colors">
-              XO Club
-            </a>
-            <a href="#faq" className="text-sm font-medium text-[#ffffff] hover:text-[#ff4800] transition-colors">
-              FAQ
-                              </a>
-                              <Link href="/signin">
-                     <Button className="bg-[#ff4800] text-[#ffffff] hover:bg-[#ff4800]/90">Login</Button>
-                              </Link>
+          ))}
+          <Link href="/signin">
+            <Button className="bg-[#ff4800] text-[#ffffff] hover:bg-[#ff4800]/90">Login</Button>
+          </Link>
+        </nav>
+        <button className="md:hidden text-white" onClick={toggleMenu}>
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+      {isMenuOpen && (
+        <div className="fixed inset-0 bg-[#020617] z-50 flex flex-col items-center justify-center  h-[350px]">
+          <button className="absolute top-5 right-4 text-white" onClick={toggleMenu}>
+            <X size={24} />
+          </button>
+          <nav className="flex flex-col items-center gap-8">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-lg font-medium text-[#ffffff] hover:text-[#ff4800] transition-colors"
+                onClick={toggleMenu}
+              >
+                {item.label}
+              </Link>
+            ))}
+            <Link href="/signin">
+              <Button className="bg-[#ff4800] text-[#ffffff] hover:bg-[#ff4800]/90" onClick={toggleMenu}>
+                Login
+              </Button>
+            </Link>
           </nav>
         </div>
-      </header>
+      )}
+    </header>
        <div className=" h-full flex justify-center items-center">
 
         <div className="max-w-[1200px] mx-auto px-4 text-center">
@@ -105,7 +142,7 @@ export default function HomeClient({ session }) {
             Play, win, and earn up to $100 with XO Players!
           </p>
           <Link href="/signup">
-          <button size="lg" className="bg-[#ff4800] text-[#ffffff] animate-pulse px-8 py-3 rounded-[8px] text-[14px] font-semibold">
+          <button size="lg" className="bg-[#ff4800] text-[#ffffff] px-8 py-3 rounded-[8px] text-[14px] font-semibold">
             Get Started Now
                               </button>
                               </Link>
@@ -362,6 +399,8 @@ export default function HomeClient({ session }) {
               </div>
             </Modal>
           )}
-      </>
+          </>
+          }
+</>
   );
 }
