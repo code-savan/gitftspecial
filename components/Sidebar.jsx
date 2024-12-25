@@ -27,7 +27,7 @@ export default function Sidebar() {
       <div className="w-full p-4 text-white flex flex-col justify-between h-full">
         <div>
             <div className='flex items-center justify-between pb-8'>
-                <Image src={"/logo.png"} alt='logo' width={100} height={100} />
+                <Image src={"/logo.png"} alt='logo' width={300} height={100} />
 
             </div>
     <ul className="space-y-4">

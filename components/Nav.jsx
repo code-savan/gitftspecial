@@ -53,10 +53,10 @@ const Nav = () => {
     }`}
 >
     {/* Sidebar content goes here */}
-    <div className="w-full p-4 text-white flex flex-col justify-between h-full">
+    <div className="w-full p-4 text-white flex flex-col justify-between h-screen">
         <div>
             <div className='flex items-center justify-between pb-8'>
-                <Image src={"/logo.png"} alt='logo' width={100} height={100} />
+                <Image src={"/logo.png"} alt='logo' width={150} height={100} />
             <X  onClick={toggleSidebar} />
             </div>
     <ul className="space-y-4">
@@ -74,7 +74,7 @@ const Nav = () => {
         </div>
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
         <Link href="/api/auth/signout" passHref>
-          <Button variant="default" className="w-full justify-start text-white bg-red-500">
+          <Button variant="default" className="w-full justify-start text-white bg-red-500 hover:bg-red-600 transition">
             <LogOut className="mr-2 h-4 w-4" />
             Sign out
           </Button>
