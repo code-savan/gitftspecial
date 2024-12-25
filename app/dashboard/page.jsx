@@ -145,7 +145,7 @@ export default function Dashboard() {
         </motion.div>
       </main>
     </div>
-    <div className='w-full md:hidden'>
+    <div className='w-full md:hidden absolute bottom-0 left-0'>
     <Stats />
 
     </div>
