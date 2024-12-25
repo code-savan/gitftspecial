@@ -7,10 +7,10 @@ import { AtSign, Eye, EyeOff, KeyRound, Mail, User } from "lucide-react"
 
 export default function SignUp() {
 
-  const [name, setName] = useState("")
+//   const [name, setName] = useState("")
+// const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [username, setUsername] = useState("")
   const [error, setError] = useState("")
 const [ref, setRef] = useState("")
     const [showPassword, setShowPassword] = useState(false)
@@ -36,7 +36,7 @@ const [ref, setRef] = useState("")
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email, password, username, ref }),
+      body: JSON.stringify({  email, password, ref }),
     })
       setLoading(false)
 
@@ -83,7 +83,7 @@ const [ref, setRef] = useState("")
         <h1 className="text-2xl font-bold mb-4 text-center text-slate-200">Create an Account</h1>
         {error && <p className="text-red-500 text-center mb-4 text-[14px] font-semibold">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="relative">
+          {/* <div className="relative">
             <label htmlFor="name" className="block text-sm font-medium text-gray-300">Name</label>
             <input
               id="name"
@@ -110,7 +110,7 @@ const [ref, setRef] = useState("")
                          focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 pl-[40px]"
                       />
                       <AtSign className="absolute bottom-[10px] left-3" size={20} color="#94a3b8" />
-          </div>
+          </div> */}
           <div className="relative">
             <label htmlFor="email" className="block text-sm font-medium text-gray-300">Email</label>
             <input

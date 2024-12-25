@@ -48,7 +48,7 @@ export default function SignIn() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder="example@gmail.com"
+              placeholder="yourmail@gmail.com"
               className="mt-1 block w-full px-3 py-2  bg-transparent border border-slate-700 rounded-md text-sm shadow-sm placeholder-gray-400 text-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 pl-[40px]"
                       />
                       <Mail className="absolute bottom-[10px] left-3" size={20} color="#94a3b8" />

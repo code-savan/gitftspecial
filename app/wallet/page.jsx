@@ -33,7 +33,7 @@ export default function Wallet() {
         <Card className="bg-[#0f172a] border-none text-white">
           <CardContent className="p-6">
             <div className="relative w-48 h-48 mx-auto">
-              <div className="w-full h-full rounded-full border-8 border-green-500" />
+              <div className={`w-full h-full rounded-full border-8 ${userData?.wallet < 5 ? "border-orange-500" : "border-green-500"} `} />
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
                 <div className="text-sm text-white">Total</div>
                 <div className="text-2xl font-bold">${userData?.wallet.toFixed(2) || 0.00}</div>

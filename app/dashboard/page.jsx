@@ -112,7 +112,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="h-screen w-full bg-[#020617] overflow-y-auto">
+    <div className="h-screen w-full bg-[#020617] overflow-y-hidden">
         <div className='md:hidden w-full'>
 
 <Nav />
@@ -120,7 +120,7 @@ export default function Dashboard() {
     <div className="flex md:h-screen">
       <Sidebar />
 
-      <main className="flex-1 pb-8 overflow-auto">
+      <main className="flex-1 pb-8 overflow-y-hidden">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -132,7 +132,7 @@ export default function Dashboard() {
 </div>
 <div>
           <h1 className="text-[25px] font-bold mt-10 mb-5 text-white capitalize text-center">
-            Welcome, {session?.user?.name}👋🏽
+            Welcome, {session?.user?.username}👋🏽
           </h1>
 </div>
           <div className="md:grid grid-cols-1 md:grid-cols-2 gap-6 w-full ">

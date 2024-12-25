@@ -40,7 +40,7 @@ export default function Profile() {
               className="rounded-full object-cover"
             />
           </div>
-          <h1 className="text-2xl font-bold capitalize">{userData?.name}</h1>
+          <h1 className="text-2xl font-bold capitalize">{userData?.username}</h1>
           <p className="text-slate-400">{userData?.email}</p>
         </div>
 
