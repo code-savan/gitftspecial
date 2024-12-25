@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useUser } from '../app/providers/UserProvider'
 import Image from 'next/image'
-import { Gift, Home, Menu, Play, Users, Wallet, X } from 'lucide-react'
+import { Club, Gift, Home, Menu, Play, Users, Wallet, X } from 'lucide-react'
 // import Sidebar from './Sidebar'
 import { Settings, LogOut, User, Target } from 'lucide-react'
 import { motion } from 'framer-motion'
@@ -20,6 +20,7 @@ const Nav = () => {
     const sidebarItems = [
         { icon: Play, label: 'Lobby', href: '/dashboard' },
         { icon: User, label: 'Profile', href: '/profile' },
+        { icon: Club, label: 'XO Club', href: '/xoclub' },
         { icon: Gift, label: 'Rewards', href: '/rewards' },
         { icon: Users, label: 'Invite', href: '/invitation' },
         { icon: Wallet, label: 'Wallet', href: '/wallet' },

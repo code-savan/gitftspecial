@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Gift, Home, Menu, Play, Users, Wallet, X } from 'lucide-react'
+import { Club, Gift, Home, Menu, Play, Users, Wallet, X } from 'lucide-react'
 // import Sidebar from './Sidebar'
 import { Settings, LogOut, User, Target } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -12,6 +12,7 @@ export default function Sidebar() {
     const sidebarItems = [
         { icon: Play, label: 'Lobby', href: '/dashboard' },
         { icon: User, label: 'Profile', href: '/profile' },
+         { icon: Club, label: 'XO Club', href: '/xoclub' },
         { icon: Gift, label: 'Rewards', href: '/rewards' },
         { icon: Users, label: 'Invite', href: '/invitation' },
         { icon: Wallet, label: 'Wallet', href: '/wallet' },
