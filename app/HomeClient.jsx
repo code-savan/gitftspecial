@@ -66,8 +66,6 @@ export default function HomeClient({ session }) {
 
 
     return (
-        <>
-      if (!session) {
                <>
              <div className="min-h-screen bg-[#020617]">
 
@@ -77,7 +75,7 @@ export default function HomeClient({ session }) {
      <header className="fixed top-0 left-0 right-0 z-50 bg-[#020617]/10 backdrop-blur-lg">
       <div className="max-w-[1200px] mx-auto px-4 flex items-center justify-between py-5">
         <div className="flex items-center gap-2 text-[#ff4800] font-bold text-xl">
-          <Image src={"/logo.png"} alt="logo" width={400} height={200} className="w-[200px]" />
+          <Image src={"/logo.png"} alt="logo" width={400} height={200} className="w-[160px]" />
         </div>
         <nav className="hidden md:flex items-center gap-8">
           {navItems.map((item) => (
@@ -400,7 +398,6 @@ export default function HomeClient({ session }) {
             </Modal>
           )}
           </>
-          }
-</>
+
   );
 }
