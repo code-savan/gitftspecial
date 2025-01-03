@@ -21,7 +21,7 @@ export default function Rewards() {
         <div className='md:hidden w-full'>
         <Nav />
       </div>
-      <div className="flex md:h-screen">
+      <div className="flex md:h-screen pt-[70px] md:pt-0">
         <Sidebar />
         <main className="flex-1 pb-8 overflow-auto">
         <div className='hidden md:flex w-full'>

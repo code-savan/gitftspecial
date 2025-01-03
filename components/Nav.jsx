@@ -29,7 +29,7 @@ const Nav = () => {
 
   return (
     <>
-    <header className='w-full py-3 px-3 bg-[#020617] border-b border-b-slate-700 '>
+    <header className='w-full py-3 px-3 bg-[#020617] border-b border-b-slate-700 fixed z-10 top-0'>
     <div className='flex w-full items-center justify-between'>
     <button
                         onClick={toggleSidebar}

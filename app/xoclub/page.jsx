@@ -15,10 +15,10 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen bg-[#020617] text-white">
-        <div className='md:hidden w-full '>
+        <div className='md:hidden w-full'>
         <Nav />
       </div>
-      <div className="flex md:h-screen">
+      <div className="flex md:h-screen pt-[70px] md:pt-0">
         <Sidebar />
         <main className="flex-1 pb-8 overflow-auto relative">
         <div className='hidden md:flex w-full'>
