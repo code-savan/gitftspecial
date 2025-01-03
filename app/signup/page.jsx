@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { AtSign, Eye, EyeOff, KeyRound, Mail, User } from "lucide-react"
+import Image from "next/image"
 
 export default function SignUp() {
 
@@ -42,7 +43,7 @@ const [ref, setRef] = useState("")
 
     if (response.ok) {
 
-      redirect("/dashboard")
+      redirect("/lobby")
     } else {
       const data = await response.json()
       setError(data.error || "Sign up failed")
@@ -79,7 +80,8 @@ const [ref, setRef] = useState("")
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
-      <div className="w-full md:max-w-md rounded-lg shadow-lg md:p-8 p-5 bg-[#03081b]">
+          <div className="w-full md:max-w-md rounded-lg shadow-lg md:p-8 p-5 bg-[#03081b]">
+              <Image src="/logo.png" alt="logo" width={200} height={200} className="mx-auto w-[150px] mb-4" />
         <h1 className="text-2xl font-bold mb-4 text-center text-slate-200">Create an Account</h1>
         {error && <p className="text-red-500 text-center mb-4 text-[14px] font-semibold">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">

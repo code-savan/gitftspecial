@@ -12,24 +12,26 @@ declare module "next-auth" {
     user?: {
       id: string;
       username?: string | null;
-      batteryLevel?: number;
-      points?: number;
-      wallet?: number;
-      chancesLeft?: number;
-      refs?: number;
-      xoWins?: number;
+    //   batteryLevel?: number;
+    //   points?: number;
+    //   wallet?: number;
+    //   chancesLeft?: number;
+    //   refs?: number;
+    //   xoWins?: number;
+      role: string;
     } & DefaultSession["user"];
   }
 }
 
 interface CustomUser extends NextAuthUser {
   username?: string | null;
-  batteryLevel?: number;
-  points?: number;
-  wallet?: number;
-  chancesLeft?: number;
-  refs?: number;
-  xoWins?: number;
+//   batteryLevel?: number;
+//   points?: number;
+//   wallet?: number;
+//   chancesLeft?: number;
+//   refs?: number;
+//   xoWins?: number;
+  role: string;
 }
 
 export const authOptions: NextAuthOptions = {
@@ -62,15 +64,16 @@ export const authOptions: NextAuthOptions = {
 
         return {
           id: user.id,
-          email: user.email,
-          name: user.name,
           username: user.username,
-          batteryLevel: user.batteryLevel,
-          points: user.points,
-          wallet: user.wallet,
-          chancesLeft: user.chancesLeft,
-          refs: user.refs,
-          xoWins: user.xoWins,
+        //   email: user.email,
+        //   name: user.name,
+        //   batteryLevel: user.batteryLevel,
+        //   points: user.points,
+        //   wallet: user.wallet,
+        //   chancesLeft: user.chancesLeft,
+        //   refs: user.refs,
+        //   xoWins: user.xoWins,
+          role: user.role,
         };
       },
     }),
@@ -80,12 +83,13 @@ export const authOptions: NextAuthOptions = {
       if (session?.user) {
         session.user.id = token.uid as string;
         session.user.username = token.username as string | null;
-        session.user.batteryLevel = token.batteryLevel as number;
-        session.user.points = token.points as number;
-        session.user.wallet = token.wallet as number;
-        session.user.chancesLeft = token.chancesLeft as number;
-        session.user.refs = token.refs as number;
-        session.user.xoWins = token.xoWins as number;
+        // session.user.batteryLevel = token.batteryLevel as number;
+        // session.user.points = token.points as number;
+        // session.user.wallet = token.wallet as number;
+        // session.user.chancesLeft = token.chancesLeft as number;
+        // session.user.refs = token.refs as number;
+        // session.user.xoWins = token.xoWins as number;
+        session.user.role = token.role as string;
       }
       return session;
     },
@@ -93,12 +97,13 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.uid = user.id;
         token.username = (user as CustomUser).username;
-        token.batteryLevel = (user as CustomUser).batteryLevel;
-        token.points = (user as CustomUser).points;
-        token.wallet = (user as CustomUser).wallet;
-        token.chancesLeft = (user as CustomUser).chancesLeft;
-        token.refs = (user as CustomUser).refs;
-        token.xoWins = (user as CustomUser).xoWins;
+        // token.batteryLevel = (user as CustomUser).batteryLevel;
+        // token.points = (user as CustomUser).points;
+        // token.wallet = (user as CustomUser).wallet;
+        // token.chancesLeft = (user as CustomUser).chancesLeft;
+        // token.refs = (user as CustomUser).refs;
+        //   token.xoWins = (user as CustomUser).xoWins;
+          token.role = (user as CustomUser).role;
       }
       return token;
     },

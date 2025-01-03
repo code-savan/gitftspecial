@@ -57,7 +57,7 @@ const Stats = () => {
            {userData.refs}
                 </span>
             </div>
-            <p className='text-[9px] text-gray-300'>Refs</p>
+            <p className='text-[9px] text-gray-300'>Friends</p>
            </div>
 
 

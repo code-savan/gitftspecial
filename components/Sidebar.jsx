@@ -10,7 +10,7 @@ import Image from 'next/image'
 
 export default function Sidebar() {
     const sidebarItems = [
-        { icon: Play, label: 'Lobby', href: '/dashboard' },
+        { icon: Play, label: 'Lobby', href: '/lobby' },
         { icon: User, label: 'Profile', href: '/profile' },
          { icon: Club, label: 'XO Club', href: '/xoclub' },
         { icon: Gift, label: 'Rewards', href: '/rewards' },

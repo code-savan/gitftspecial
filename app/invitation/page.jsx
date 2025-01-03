@@ -15,7 +15,7 @@ import { useUser } from '../providers/UserProvider'
 export default function Invitation() {
   const { userData, refreshUserData } = useUser()
   const [copied, setCopied] = useState(false)
-  const referralLink = `http://localhost:3000/signup?ref=${userData?.referralCode}`
+  const referralLink = `https://gitftspecial.vercel.app/signup?ref=${userData?.referralCode}`
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(referralLink)

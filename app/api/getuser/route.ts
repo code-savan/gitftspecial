@@ -111,6 +111,7 @@ export async function GET(req: Request) {
         batteryLevel: true,
         points: true,
         wallet: true,
+        role: true,
         referrerId: true,
         refs: true,
         chancesLeft: true,

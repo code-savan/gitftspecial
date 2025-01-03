@@ -5,6 +5,7 @@ import { redirect } from "next/navigation"
 import { useState } from "react"
 import Link from "next/link"
 import { AtSign, Eye, EyeOff, KeyRound, Mail } from "lucide-react"
+import Image from "next/image"
 
 export default function SignIn() {
   const [email, setEmail] = useState("")
@@ -30,13 +31,14 @@ export default function SignIn() {
       setError("Invalid email or password")
     } else {
 
-      redirect("/dashboard")
+      redirect("/lobby")
     }
   }
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">
-      <div className="w-full md:max-w-md rounded-lg shadow-lg md:p-8 p-5 bg-[#03081b]">
+          <div className="w-full md:max-w-md rounded-lg shadow-lg md:p-8 p-5 bg-[#03081b]">
+          <Image src="/logo.png" alt="logo" width={200} height={200} className="mx-auto w-[150px] mb-4" />
         <h1 className="text-2xl font-bold mb-4 text-center text-slate-200">Welcome Back</h1>
         {error && <p className="text-red-500 text-center mb-4 text-[14px] font-semibold">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">

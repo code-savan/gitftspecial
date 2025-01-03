@@ -113,11 +113,11 @@ export default function Dashboard() {
 
   return (
     <div className="h-screen w-full bg-[#020617] overflow-y-hidden">
-        <div className='md:hidden w-full'>
+        <div className='md:hidden w-full fixed top-0'>
 
 <Nav />
         </div>
-    <div className="flex md:h-screen">
+    <div className="flex md:h-screen pt-[70px]">
       <Sidebar />
 
       <main className="flex-1 pb-8 overflow-y-hidden">
