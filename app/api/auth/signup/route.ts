@@ -234,19 +234,20 @@ function generateReferralCode(length = 8) {
 
 // POST request handler for user creation
 export async function POST(req: Request) {
-  const { email, password, ref } = await req.json();
+  try {
+    const { email, password, ref } = await req.json();
 
-  // Check for missing fields
-  if (!email || !password) {
-    return NextResponse.json({ error: "Missing fields" }, { status: 400 });
-  }
+    // Check for missing fields
+    if (!email || !password) {
+      return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+    }
 
-  // Check if user already exists
-  const existingUser = await prisma.user.findFirst({
-    where: {
-      OR: [{ email }],
-    },
-  });
+    // Check if user already exists
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        OR: [{ email }],
+      },
+    });
 
   if (existingUser) {
     return NextResponse.json({ error: "Account already exists" }, { status: 400 });
@@ -337,5 +338,11 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Error creating user:", error);
     return NextResponse.json({ error: "Error creating user" }, { status: 500 });
+  }
+  } catch (error) {
+    console.error("Database connection error:", error);
+    return NextResponse.json({
+      error: "Database connection failed. Please check your database configuration."
+    }, { status: 500 });
   }
 }

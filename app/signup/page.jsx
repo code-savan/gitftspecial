@@ -32,21 +32,34 @@ const [ref, setRef] = useState("")
   const handleSubmit = async (e) => {
       e.preventDefault()
       setLoading(true)
-    const response = await fetch("/api/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({  email, password, ref }),
-    })
+      setError("")
+
+    try {
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({  email, password, ref }),
+      })
+
+      if (response.ok) {
+        redirect("/lobby")
+      } else {
+        // Check if response has content before trying to parse JSON
+        const contentType = response.headers.get("content-type")
+        if (contentType && contentType.includes("application/json")) {
+          const data = await response.json()
+          setError(data.error || "Sign up failed")
+        } else {
+          setError("Sign up failed. Please try again.")
+        }
+      }
+    } catch (error) {
+      console.error("Signup error:", error)
+      setError("Network error. Please check your connection and try again.")
+    } finally {
       setLoading(false)
-
-    if (response.ok) {
-
-      redirect("/lobby")
-    } else {
-      const data = await response.json()
-      setError(data.error || "Sign up failed")
     }
   };
 
