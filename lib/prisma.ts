@@ -11,4 +11,4 @@ const prisma = global.prisma || new PrismaClient();
     global.prisma = prisma;
     }
 
-    export default prisma;
+    export default prisma;   
